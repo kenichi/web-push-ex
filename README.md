@@ -1,22 +1,19 @@
-# WebPush
+# WebPushEx
 
-This library implements RFC 8291 Message Encryption for Web Push.
+This library implements
+[RFC 8291](https://datatracker.ietf.org/doc/html/rfc8291/) Message Encryption
+for Web Push in Elixir.
 
 It generates request details but does not make the HTTP POST request itself. The
 generated details should be enough to feed to your HTTP client of choice.
 
-## Installation
+#### Features
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `web_push` to your list of dependencies in `mix.exs`:
-
-```elixir
-def deps do
-  [
-    {:web_push, "~> 0.1.0"}
-  ]
-end
-```
+* `aes128gcm` content encoding method
+* uses `:json` (requires Erlang/OTP >=27)
+* uses JOSE for handling JWT
+* bring your own HTTP client
+* tested using RFC examples
 
 ## Configuration
 
@@ -27,18 +24,18 @@ generated config to your needs:
 $ mix web_push.vapid
 # in config/config.exs:
 
-    config :web_push, :vapid,
+    config :web_push_ex, :vapid,
       public_key: "<base64 encoded public key>"
       subject: "webpush-admin-email@example.com"
 
 # in config/runtime.exs:
 
-    config :web_push, :vapid,
+    config :web_push_ex, :vapid,
       private_key: System.fetch_env!("WEB_PUSH_VAPID_PRIVATE_KEY")
 
 # in your environment:
 
-    export WEB_PUSH_VAPID_PRIVATE_KEY=<base64 encoded private key>
+    export WEB_PUSH_EX_VAPID_PRIVATE_KEY=<base64 encoded private key>
 ```
 
 ## Usage
@@ -54,13 +51,13 @@ pushManager.subscribe({
 }).then(...);
 ```
 
-Once you have your subscription data, you may construct a `WebPush.Request` and
+Once you have your subscription data, you may construct a `WebPushEx.Request` and
 use it to make the push notification via the HTTP client of your choice.
 
 ```elixir
 # create the struct from the subscription JSON data
 subscription =
-  WebPush.Subscription.from_json("""
+  WebPushEx.Subscription.from_json("""
   {"endpoint":"https://push.example.com/123","keys":{"p256dh":"user_agent_public_key","auth":"auth_secret"}}
   """)
 
@@ -68,7 +65,7 @@ subscription =
 message = %{title: "Notification Title", body: "lorem ipsum etc"}
 
 # generate request details
-%WebPush.Request{} = request = WebPush.request(subscription, :json.encode(message))
+%WebPushEx.Request{} = request = WebPushEx.request(subscription, :json.encode(message))
 
 request.endpoint
 # => "https://push.example.com/123"
@@ -86,13 +83,28 @@ request.headers
 #   "Urgency" => "normal"
 # }
 
-# send web push notification via http client e.g. tesla
-Tesla.post(request.endpoint, request.body, headers: Map.to_list(request.headers))
+# send web push notification via http client e.g. req
+{:ok, resp} = Req.post(request.endpoint, body: request.body, headers: request.headers)
+```
+
+## Installation
+
+If [available in Hex](https://hex.pm/docs/publish), the package can be installed
+by adding `web_push` to your list of dependencies in `mix.exs`:
+
+```elixir
+def deps do
+  [
+    {:web_push_ex, "~> 0.1.0"}
+  ]
+end
 ```
 
 ## tl()
 
 #### Motivation && Inspiration
+
+Many thanks to maintainers and contributors to all these repos 🙇
 
 * [web-push-elixir](https://github.com/midarrlabs/web-push-elixir)
 * [web-push-encryption](https://github.com/tuvistavie/elixir-web-push-encryption)

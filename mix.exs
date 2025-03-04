@@ -1,12 +1,12 @@
-defmodule WebPush.MixProject do
+defmodule WebPushEx.MixProject do
   use Mix.Project
 
-  @source_url "https://github.com/kenichi/web-push"
+  @source_url "https://github.com/kenichi/web-push-ex"
   @version "0.1.0"
 
   def project do
     [
-      app: :web_push,
+      app: :web_push_ex,
       version: @version,
       elixir: "~> 1.17",
       elixirc_paths: elixirc_paths(Mix.env()),

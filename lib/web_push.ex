@@ -1,11 +1,11 @@
-defmodule WebPush do
+defmodule WebPushEx do
   @moduledoc """
   Web Push notifications via `aes128gcm`.
 
   Implementation of RFC 8291, 8188, & 5689.
   """
 
-  alias WebPush.{Request, Subscription}
+  alias WebPushEx.{Request, Subscription}
 
   @base64_options [padding: false]
   @default_exp 12 * 60 * 60
@@ -176,7 +176,7 @@ defmodule WebPush do
 
   @spec fetch_vapid!(vapid_key(), boolean()) :: String.t()
   defp fetch_vapid!(key, decode \\ true) do
-    :web_push
+    :web_push_ex
     |> Application.fetch_env!(:vapid)
     |> Keyword.fetch!(key)
     |> decode_if(key, decode)

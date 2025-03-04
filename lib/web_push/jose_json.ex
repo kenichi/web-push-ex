@@ -1,4 +1,4 @@
-defmodule WebPush.JOSEjson do
+defmodule WebPushEx.JOSEjson do
   @moduledoc """
   :json wrapper for JOSE.
   """

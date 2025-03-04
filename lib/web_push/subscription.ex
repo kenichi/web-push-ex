@@ -1,4 +1,4 @@
-defmodule WebPush.Subscription do
+defmodule WebPushEx.Subscription do
   @moduledoc """
   Subscription data structure.
   """

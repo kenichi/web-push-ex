@@ -1,4 +1,4 @@
-defmodule WebPush.Request do
+defmodule WebPushEx.Request do
   @moduledoc """
   Request details ready for sending to the subscription endpoint.
   """

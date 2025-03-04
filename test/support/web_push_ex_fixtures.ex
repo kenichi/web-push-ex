@@ -1,11 +1,11 @@
-defmodule WebPushFixtures do
+defmodule WebPushExFixtures do
   @moduledoc """
   Example data from RFC 8291, section 5.
 
   see: https://datatracker.ietf.org/doc/html/rfc8291/#section-5
   """
 
-  import WebPush, only: [decode: 1]
+  import WebPushEx, only: [decode: 1]
 
   @doc """
   WebPushSubscription fixture with default `p256dh` and `auth` values from the
@@ -21,7 +21,7 @@ defmodule WebPushFixtures do
         auth: "BTBZMqHH6r4Tts7J_aSIgg"
       }
     })
-    |> then(&struct!(WebPush.Subscription, &1))
+    |> then(&struct!(WebPushEx.Subscription, &1))
   end
 
   @doc """
