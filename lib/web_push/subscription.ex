@@ -37,6 +37,9 @@ defmodule WebPushEx.Subscription do
 
         key in [:p256dh, :auth, :keys] ->
           value
+
+        true ->
+          value
       end
 
     [{key, value} | acc]
