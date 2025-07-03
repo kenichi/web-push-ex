@@ -31,10 +31,12 @@ defmodule WebPushEx.Subscription do
     key = String.to_existing_atom(key)
 
     value =
-      if key == :endpoint and is_binary(value) do
-        URI.parse(value)
-      else
-        value
+      cond do
+        key == :endpoint and is_binary(value) ->
+          URI.parse(value)
+
+        key in [:p256dh, :auth, :keys] ->
+          value
       end
 
     [{key, value} | acc]
