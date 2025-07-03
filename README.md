@@ -65,7 +65,7 @@ subscription =
 message = %{title: "Notification Title", body: "lorem ipsum etc"}
 
 # generate request details
-%WebPushEx.Request{} = request = WebPushEx.request(subscription, :json.encode(message))
+%WebPushEx.Request{} = request = WebPushEx.request(subscription, :json.encode(message) |> to_string())
 
 request.endpoint
 # => "https://push.example.com/123"
