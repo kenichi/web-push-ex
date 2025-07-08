@@ -89,13 +89,12 @@ request.headers
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `web_push` to your list of dependencies in `mix.exs`:
+The package can be installed by adding `web_push` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
   [
-    {:web_push_ex, "~> 0.1.0"}
+    {:web_push_ex, "~> 0.2.0"}
   ]
 end
 ```
