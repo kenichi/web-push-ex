@@ -47,14 +47,38 @@ defmodule WebPushExTest do
       assert observed.keys == expected.keys
     end
 
-    test "raises with invalid keys" do
-      assert_raise ArgumentError, fn ->
+    test "raises KeyError with invalid keys" do
+      assert_raise KeyError, fn ->
+        WebPushEx.Subscription.from_json("""
+        {
+          "endpoint": "https://push.example.com/123",
+          "keys": {
+            "p256": "BCVxsr7N_eNgVRqvHtD0zTZsEc6-VV-JvLexhqUzORcxaOzi6-AYWXvTBHm4bjyPjs7Vd8pZGH6SRpkNtoIAiw4",
+            "au": "BTBZMqHH6r4Tts7J_aSIgg"
+          }
+        }
+        """)
+      end
+
+      assert_raise KeyError, fn ->
+        WebPushEx.Subscription.from_json("""
+        {
+          "endpoint": "https://push.example.com/123",
+          "key": {
+            "p256dh": "BCVxsr7N_eNgVRqvHtD0zTZsEc6-VV-JvLexhqUzORcxaOzi6-AYWXvTBHm4bjyPjs7Vd8pZGH6SRpkNtoIAiw4",
+            "auth": "BTBZMqHH6r4Tts7J_aSIgg"
+          }
+        }
+        """)
+      end
+
+      assert_raise KeyError, fn ->
         WebPushEx.Subscription.from_json("""
         {
           "end": "https://push.example.com/123",
-          "key": {
-            "p256": "BCVxsr7N_eNgVRqvHtD0zTZsEc6-VV-JvLexhqUzORcxaOzi6-AYWXvTBHm4bjyPjs7Vd8pZGH6SRpkNtoIAiw4",
-            "au": "BTBZMqHH6r4Tts7J_aSIgg"
+          "keys": {
+            "p256dh": "BCVxsr7N_eNgVRqvHtD0zTZsEc6-VV-JvLexhqUzORcxaOzi6-AYWXvTBHm4bjyPjs7Vd8pZGH6SRpkNtoIAiw4",
+            "auth": "BTBZMqHH6r4Tts7J_aSIgg"
           }
         }
         """)
