@@ -35,6 +35,11 @@ jobs:
       - name: test
         run: mix test
 
+      - name: atom
+        env:
+          MIX_ENV: test
+        run: mix run test/support/atom.exs
+
       - name: credo
         env:
           MIX_ENV: test

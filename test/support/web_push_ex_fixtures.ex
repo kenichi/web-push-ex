@@ -11,17 +11,15 @@ defmodule WebPushExFixtures do
   WebPushSubscription fixture with default `p256dh` and `auth` values from the
   RFC example.
   """
-  def web_push_subscription_fixture(attrs \\ %{}) do
-    attrs
-    |> Enum.into(%{
+  def web_push_subscription_fixture do
+    %WebPushEx.Subscription{
       endpoint: URI.parse("https://push.example.com/123"),
       keys: %{
         p256dh:
           "BCVxsr7N_eNgVRqvHtD0zTZsEc6-VV-JvLexhqUzORcxaOzi6-AYWXvTBHm4bjyPjs7Vd8pZGH6SRpkNtoIAiw4",
         auth: "BTBZMqHH6r4Tts7J_aSIgg"
       }
-    })
-    |> then(&struct!(WebPushEx.Subscription, &1))
+    }
   end
 
   @doc """
