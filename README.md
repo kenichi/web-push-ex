@@ -89,7 +89,7 @@ request.headers
 
 ## Installation
 
-The package can be installed by adding `web_push` to your list of dependencies in `mix.exs`:
+The package can be installed by adding `web_push_ex` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
